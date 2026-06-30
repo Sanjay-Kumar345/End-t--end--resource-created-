@@ -10,3 +10,35 @@ steps:
      terraformVersion: latest
  - script: terraform version
    displayName: Check terraform version 
+
+ - task: TerraformTaskInit@2
+   displayName: Terraform init 
+  
+   inputs:
+     provider: azurerm
+     command: init
+     workingDirectory: $(system.DefaultWorkingDirectory)
+ - task: TerraformTaskValidate@3
+   displayName: terraform validate 
+
+   inputs: 
+   provider: azurerm
+   command: validate
+
+
+ - task: TerraformTaskPlan@4
+   displayName: terraform plan 
+  
+   inputs:
+   provider: azurerm
+   command: plan
+   environmentServiceNameAzureRM: test-pipeline-svc
+
+ - task: TerraformTaskApply@5
+   displayName: terraform apply 
+
+   inputs:
+   provider: azurerm
+   command: apply
+   commandOptions: -auto--approve
+   environmentServiceNameAzureRM: test-pipeline-svc
