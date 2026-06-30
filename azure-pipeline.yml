@@ -53,5 +53,5 @@ steps:
     provider: azurerm
     command: apply
     workingDirectory: $(System.DefaultWorkingDirectory)
-    commandOptions: "-auto-approve -var-file=terraform.tfvars
+    commandOptions: "-auto-approve -var-file=terraform.tfvars"
     environmentServiceNameAzureRM: test-pipeline-svc
