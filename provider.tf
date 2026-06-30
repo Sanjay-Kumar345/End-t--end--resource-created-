@@ -1,8 +1,8 @@
 terraform {
   backend "azurerm" {
-    resource_group_name = "test-rg"
-    storage_account_name = "alphastrg456"
-    container_name = "alphacontainer"
+    resource_group_name = "alpha-rg"
+    storage_account_name = "apnastrg789"
+    container_name = "apna-container"
     key = "pipeline.tfstate"
     
   }
