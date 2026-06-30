@@ -1,0 +1,12 @@
+trigger:
+ - main
+pool:
+  name: test-agent
+
+steps:
+
+ - task: TerraformInstaller@1
+   inputs:
+     terraformVersion: latest
+ - script: terraform version
+   displayName: Check terraform version 
