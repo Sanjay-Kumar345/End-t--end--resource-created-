@@ -22,6 +22,11 @@ steps:
     command: init
     workingDirectory: $(System.DefaultWorkingDirectory)
     backendServiceArm: test-pipeline-svc
+    
+    backendAzureRmResourceGroupName: alpha-rg
+    backendAzureRmStorageAccountName: apnastrg789
+    backendAzureRmContainerName: apna-container
+    backendAzureRmKey: pipeline.tfstate
 
 # Terraform Validate
 - task: TerraformTaskV4@4
