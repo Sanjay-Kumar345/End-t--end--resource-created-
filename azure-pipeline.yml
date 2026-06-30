@@ -1,44 +1,51 @@
 trigger:
- - main
+- main
+
 pool:
   name: test-agent
 
 steps:
 
- - task: TerraformInstaller@1
-   inputs:
-     terraformVersion: latest
- - script: terraform version
-   displayName: Check terraform version 
+- task: TerraformInstaller@1
+  displayName: Install Terraform
+  inputs:
+    terraformVersion: latest
 
- - task: TerraformTaskInit@2
-   displayName: Terraform init 
-  
-   inputs:
-     provider: azurerm
-     command: init
-     workingDirectory: $(system.DefaultWorkingDirectory)
- - task: TerraformTaskValidate@3
-   displayName: terraform validate 
+- script: terraform version
+  displayName: Check Terraform Version
 
-   inputs: 
-   provider: azurerm
-   command: validate
+# Terraform Init
+- task: TerraformTaskV4@4
+  displayName: Terraform Init
+  inputs:
+    provider: azurerm
+    command: init
+    workingDirectory: $(System.DefaultWorkingDirectory)
+    backendServiceArm: test-pipeline-svc
 
+# Terraform Validate
+- task: TerraformTaskV4@4
+  displayName: Terraform Validate
+  inputs:
+    provider: azurerm
+    command: validate
+    workingDirectory: $(System.DefaultWorkingDirectory)
 
- - task: TerraformTaskPlan@4
-   displayName: terraform plan 
-  
-   inputs:
-   provider: azurerm
-   command: plan
-   environmentServiceNameAzureRM: test-pipeline-svc
+# Terraform Plan
+- task: TerraformTaskV4@4
+  displayName: Terraform Plan
+  inputs:
+    provider: azurerm
+    command: plan
+    workingDirectory: $(System.DefaultWorkingDirectory)
+    environmentServiceNameAzureRM: test-pipeline-svc
 
- - task: TerraformTaskApply@5
-   displayName: terraform apply 
-
-   inputs:
-   provider: azurerm
-   command: apply
-   commandOptions: -auto--approve
-   environmentServiceNameAzureRM: test-pipeline-svc
+# Terraform Apply
+- task: TerraformTaskV4@4
+  displayName: Terraform Apply
+  inputs:
+    provider: azurerm
+    command: apply
+    workingDirectory: $(System.DefaultWorkingDirectory)
+    commandOptions: -auto-approve
+    environmentServiceNameAzureRM: test-pipeline-svc
